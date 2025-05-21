@@ -26,20 +26,16 @@ use ApiPlatform\Metadata\Patch;
     normalizationContext: ['groups' => ['visita:read']],
     denormalizationContext: ['groups' => ['visita:write']],
     operations: [
-        // Obtener UNA visita: el dueño o un admin
         new Get(
             security: "is_granted('ROLE_ADMIN') or object.getUsuario() == user"
         ),
 
-        // Obtener TODAS las visitas: solo admins, o solo las del usuario
         new GetCollection(),
 
-        // Crear una visita: cualquier usuario autenticado
         new Post(
             validationContext: ['groups' => ['visita:crear']]
         ),
 
-        // Editar: solo admin o el dueño
         new Put(
             security: "is_granted('ROLE_ADMIN') or object.getUsuario() == user",
             validationContext: ['groups' => ['visita:editar']]
@@ -50,7 +46,6 @@ use ApiPlatform\Metadata\Patch;
             validationContext: ['groups' => ['Default']]
         ),
 
-        // Eliminar: solo admin
         new Delete(
             security: "is_granted('ROLE_ADMIN')"
         ),

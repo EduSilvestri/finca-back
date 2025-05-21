@@ -46,7 +46,6 @@ class AnimalEditarFotoController
                     $value = $request->request->get($key);
 
                     if ($key === 'prenada') {
-                        // ✅ Interpretar correctamente el booleano
                         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
                     }
             

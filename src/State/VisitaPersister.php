@@ -39,7 +39,6 @@ class VisitaPersister implements ProcessorInterface
         throw new \LogicException('El usuario autenticado no es válido');
     }
 
-    // ✅ Validaciones de fecha solo en POST o PUT
     if ($operation instanceof Post || $operation instanceof Put) {
         $fecha = $data->getFecha();
         $minDate = (new \DateTime())->modify('+2 days')->setTime(0, 0);
@@ -53,7 +52,6 @@ class VisitaPersister implements ProcessorInterface
             throw new \RuntimeException('La hora debe estar entre 8:00 a.m. y 5:00 p.m.');
         }
 
-        // Validar duplicado (excepto si es la misma)
         $repo = $this->em->getRepository(Visita::class);
         $idActual = $data->getId() ?? $uriVariables['id'] ?? null;
         $existente = $repo->findOneBy(['fecha' => $fecha]);
@@ -63,7 +61,6 @@ class VisitaPersister implements ProcessorInterface
         }
     }
 
-    // ✅ Asignar usuario y nombreVisitante solo en POST si no vienen
     if ($operation instanceof Post) {
         if (!$data->getUsuario()) {
             $data->setUsuario($user);
@@ -74,7 +71,6 @@ class VisitaPersister implements ProcessorInterface
         }
     }
 
-    // ✅ Restaurar datos originales en PUT si vienen vacíos
     if ($operation instanceof Put) {
         $id = $data->getId() ?? $uriVariables['id'] ?? null;
         if ($id) {

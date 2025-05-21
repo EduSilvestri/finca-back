@@ -17,7 +17,6 @@ class AnimalFotoUploadController
         $file = $request->files->get('foto');
         $filename = null;
 
-        // Si hay una imagen, intentamos guardarla
         if ($file) {
             $filename = (new \DateTime())->format('YmdHis') . '.' . $file->guessExtension();
 
